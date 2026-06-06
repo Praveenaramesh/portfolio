@@ -1,0 +1,1450 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Praveena Ramesh · Business Analyst</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,600&family=Instrument+Sans:wght@400;500;600;700&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Courier+Prime:wght@400;700&display=swap" rel="stylesheet">
+<style>
+/* ═══════════════════════════════════════
+   TOKENS
+═══════════════════════════════════════ */
+:root {
+  --cream:    #f9f5ef;
+  --cream2:   #f2ebe0;
+  --cream3:   #e8ddd0;
+  --parchment:#ede3d3;
+  --white:    #fffffe;
+  --espresso: #2c1a0e;
+  --brown:    #4a2c1a;
+  --brown2:   #6b4226;
+  --brown3:   #8b5e3c;
+  --caramel:  #b8834a;
+  --gold:     #c9963a;
+  --gold2:    #daa756;
+  --sand:     #d4b896;
+  --ink:      #1a1208;
+  --charcoal: #2d2416;
+  --muted:    #7a6352;
+  --soft:     #a08c78;
+  --rule:     #c8b89a;
+
+  --f-display: 'EB Garamond', Georgia, serif;
+  --f-serif:   'Libre Baskerville', Georgia, serif;
+  --f-body:    'Instrument Sans', system-ui, sans-serif;
+  --f-mono:    'Courier Prime', Courier, monospace;
+
+  --r-sm: 4px;
+  --r-md: 8px;
+  --r-lg: 16px;
+  --r-xl: 32px;
+
+  --shadow: 0 4px 24px rgba(44,26,14,.10);
+  --shadow-md: 0 12px 48px rgba(44,26,14,.14);
+  --shadow-lg: 0 24px 80px rgba(44,26,14,.18);
+}
+
+/* ═══════════════════════════════════════
+   RESET & BASE
+═══════════════════════════════════════ */
+*,*::before,*::after { box-sizing:border-box; margin:0; padding:0; }
+html { scroll-behavior:smooth; font-size:16px; }
+body {
+  font-family: var(--f-body);
+  background: var(--cream);
+  color: var(--ink);
+  overflow-x: hidden;
+  cursor: none;
+}
+
+/* ═══════════════════════════════════════
+   GRAIN TEXTURE OVERLAY
+═══════════════════════════════════════ */
+body::before {
+  content: '';
+  position: fixed; inset: 0;
+  pointer-events: none; z-index: 9000;
+  opacity: .025;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  background-size: 256px 256px;
+}
+
+/* ═══════════════════════════════════════
+   CUSTOM CURSOR
+═══════════════════════════════════════ */
+.cur-dot {
+  width: 6px; height: 6px;
+  background: var(--espresso);
+  border-radius: 50%;
+  position: fixed; top:0; left:0;
+  pointer-events: none; z-index: 9999;
+  transform: translate(-50%,-50%);
+}
+.cur-ring {
+  width: 32px; height: 32px;
+  border: 1.5px solid var(--brown3);
+  border-radius: 50%;
+  position: fixed; top:0; left:0;
+  pointer-events: none; z-index: 9998;
+  transform: translate(-50%,-50%);
+  transition: transform .15s cubic-bezier(.23,1,.32,1), width .2s, height .2s;
+  opacity: .5;
+}
+body.hov .cur-ring { width: 48px; height: 48px; border-color: var(--gold); opacity: .35; }
+
+/* ═══════════════════════════════════════
+   PROGRESS
+═══════════════════════════════════════ */
+.progress-line {
+  position: fixed; top:0; left:0;
+  height: 2px; background: var(--gold);
+  z-index: 2000; transition: width .08s;
+}
+
+/* ═══════════════════════════════════════
+   NAV — horizontal ruled bar
+═══════════════════════════════════════ */
+nav {
+  position: fixed; top:0; left:0; right:0;
+  z-index: 1000;
+  background: rgba(249,245,239,.95);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--rule);
+  padding: 0 60px;
+  height: 60px;
+  display: flex; align-items: center;
+  justify-content: space-between;
+  transition: box-shadow .3s;
+}
+nav.lifted { box-shadow: var(--shadow); }
+.nav-brand {
+  font-family: var(--f-display);
+  font-size: 18px; font-weight: 600;
+  color: var(--espresso);
+  letter-spacing: .5px;
+}
+.nav-brand span {
+  color: var(--gold);
+  font-style: italic;
+}
+.nav-links { display:flex; align-items:center; gap:0; }
+.nl {
+  font-family: var(--f-body);
+  font-size: 12px; font-weight: 600;
+  color: var(--muted);
+  padding: 8px 16px;
+  letter-spacing: .5px;
+  text-transform: uppercase;
+  cursor: none;
+  transition: color .2s;
+  border: none; background: none;
+  position: relative;
+}
+.nl::after {
+  content:''; position:absolute;
+  bottom:6px; left:16px; right:16px;
+  height: 1px; background: var(--gold);
+  transform: scaleX(0); transform-origin: left;
+  transition: transform .2s;
+}
+.nl:hover,.nl.on { color: var(--espresso); }
+.nl:hover::after,.nl.on::after { transform: scaleX(1); }
+.nl-cta {
+  background: var(--espresso);
+  color: var(--cream) !important;
+  padding: 8px 22px;
+  margin-left: 12px;
+  border-radius: var(--r-sm);
+  transition: background .2s;
+}
+.nl-cta::after { display:none; }
+.nl-cta:hover { background: var(--brown); }
+
+/* ═══════════════════════════════════════
+   REVEAL
+═══════════════════════════════════════ */
+.rv  { opacity:0; transform:translateY(24px); transition:opacity .8s cubic-bezier(.23,1,.32,1),transform .8s cubic-bezier(.23,1,.32,1); }
+.rvl { opacity:0; transform:translateX(-24px); transition:opacity .8s cubic-bezier(.23,1,.32,1),transform .8s cubic-bezier(.23,1,.32,1); }
+.rvr { opacity:0; transform:translateX(24px);  transition:opacity .8s cubic-bezier(.23,1,.32,1),transform .8s cubic-bezier(.23,1,.32,1); }
+.rv.on,.rvl.on,.rvr.on { opacity:1; transform:none; }
+.d1{transition-delay:.08s}.d2{transition-delay:.16s}.d3{transition-delay:.24s}
+.d4{transition-delay:.32s}.d5{transition-delay:.40s}.d6{transition-delay:.50s}
+
+/* ═══════════════════════════════════════
+   SECTION SHELL
+═══════════════════════════════════════ */
+.wrap { max-width:1120px; margin:0 auto; padding:0 60px; }
+section { padding:100px 0; }
+.sec-eyebrow {
+  font-family: var(--f-mono);
+  font-size: 11px; font-weight: 700;
+  letter-spacing: 3px; text-transform: uppercase;
+  color: var(--gold);
+  display: flex; align-items: center; gap: 12px;
+  margin-bottom: 14px;
+}
+.sec-eyebrow::before {
+  content:''; width:32px; height:1px;
+  background: var(--gold);
+}
+.sec-h {
+  font-family: var(--f-display);
+  font-size: clamp(36px,4vw,62px);
+  font-weight: 500;
+  line-height: 1.08;
+  color: var(--espresso);
+  letter-spacing: -.5px;
+}
+.sec-h em { font-style:italic; color: var(--brown2); }
+.ruled-line {
+  width: 100%; height: 1px;
+  background: var(--rule);
+  margin: 48px 0;
+}
+
+/* ═══════════════════════════════════════
+   ① HERO — editorial full-height
+═══════════════════════════════════════ */
+#hero {
+  min-height: 100vh;
+  background: var(--cream);
+  padding-top: 60px;
+  display: flex; align-items: center;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Large decorative serif letterform in background */
+#hero::before {
+  content: 'PR';
+  position: absolute;
+  right: -60px; top: 50%;
+  transform: translateY(-50%);
+  font-family: var(--f-display);
+  font-size: 420px;
+  font-weight: 800;
+  color: var(--cream2);
+  line-height: 1;
+  letter-spacing: -20px;
+  pointer-events: none;
+  user-select: none;
+}
+
+/* Vertical rule left accent */
+.hero-layout {
+  display: grid;
+  grid-template-columns: 1fr 380px;
+  gap: 80px; align-items: center;
+  position: relative; z-index:2;
+}
+.hero-left {}
+.hero-category {
+  font-family: var(--f-mono);
+  font-size: 11px; font-weight: 700;
+  letter-spacing: 3px; text-transform: uppercase;
+  color: var(--gold);
+  display: flex; align-items: center; gap: 10px;
+  margin-bottom: 28px;
+}
+.hero-category::before { content:'—'; color: var(--sand); }
+
+h1.hero-name {
+  font-family: var(--f-display);
+  font-size: clamp(52px, 6.5vw, 96px);
+  font-weight: 700;
+  line-height: .96;
+  color: var(--espresso);
+  letter-spacing: -3px;
+  margin-bottom: 12px;
+}
+h1.hero-name .italic {
+  font-style: italic;
+  font-weight: 400;
+  color: var(--brown2);
+  display: block;
+}
+.hero-title-bar {
+  display: flex; align-items: center; gap: 16px;
+  margin-bottom: 32px;
+}
+.hero-role {
+  font-family: var(--f-body);
+  font-size: 14px; font-weight: 700;
+  letter-spacing: 2px; text-transform: uppercase;
+  color: var(--muted);
+}
+.hero-title-bar::after {
+  content:''; flex:1; height:1px;
+  background: linear-gradient(to right, var(--rule), transparent);
+}
+.hero-desc {
+  font-family: var(--f-serif);
+  font-size: 17px; line-height: 1.75;
+  color: var(--charcoal);
+  max-width: 560px;
+  margin-bottom: 40px;
+}
+.hero-desc em { font-style:italic; color:var(--brown2); }
+
+/* Stats in ruled columns */
+.hero-stats {
+  display: grid; grid-template-columns: repeat(4,1fr);
+  border-top: 1px solid var(--rule);
+  border-left: 1px solid var(--rule);
+  margin-bottom: 44px;
+}
+.hstat {
+  padding: 20px 16px;
+  border-right: 1px solid var(--rule);
+  border-bottom: 1px solid var(--rule);
+}
+.hstat-val {
+  font-family: var(--f-display);
+  font-size: 40px; font-weight: 700;
+  color: var(--espresso); line-height: 1;
+  margin-bottom: 6px;
+}
+.hstat-lbl {
+  font-size: 10px; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 1px;
+  color: var(--soft);
+}
+.hero-btns { display:flex; gap:12px; }
+.btn {
+  display:inline-flex; align-items:center; gap:8px;
+  font-family: var(--f-body);
+  font-size: 12px; font-weight: 700;
+  letter-spacing: .8px; text-transform: uppercase;
+  padding: 14px 28px;
+  cursor: none; transition: all .25s;
+  border: none;
+}
+.btn-dark {
+  background: var(--espresso);
+  color: var(--cream);
+  box-shadow: 0 4px 20px rgba(44,26,14,.25);
+}
+.btn-dark:hover { background: var(--charcoal); transform: translateY(-2px); box-shadow: 0 8px 32px rgba(44,26,14,.3); }
+.btn-outline {
+  background: transparent;
+  color: var(--espresso);
+  border: 1.5px solid var(--brown3);
+}
+.btn-outline:hover { background: var(--cream2); border-color: var(--espresso); transform: translateY(-2px); }
+
+/* Hero right column */
+.hero-right {
+  display: flex; flex-direction: column; gap:0;
+}
+.hr-card {
+  background: var(--white);
+  border: 1px solid var(--cream3);
+  padding: 28px;
+  box-shadow: var(--shadow);
+}
+.hr-card + .hr-card { border-top: none; }
+.hrc-label {
+  font-family: var(--f-mono);
+  font-size: 10px; font-weight: 700;
+  letter-spacing: 2px; text-transform: uppercase;
+  color: var(--soft);
+  border-bottom: 1px solid var(--cream3);
+  padding-bottom: 10px; margin-bottom: 16px;
+}
+.toolkit-grid { display:flex; flex-wrap:wrap; gap:6px; }
+.tk-pill {
+  font-family: var(--f-body);
+  font-size: 11px; font-weight: 600;
+  padding: 5px 11px;
+  background: var(--cream);
+  border: 1px solid var(--cream3);
+  color: var(--brown);
+  cursor: none;
+  transition: all .18s;
+  letter-spacing: .3px;
+}
+.tk-pill:hover { background: var(--espresso); color: var(--cream); border-color: var(--espresso); }
+.ach-mini { display:flex; flex-direction:column; gap:10px; }
+.ach-m {
+  display:flex; gap:10px; align-items:flex-start;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--cream2);
+}
+.ach-m:last-child { border-bottom: none; }
+.ach-m-icon { font-size:16px; flex-shrink:0; margin-top:2px; }
+.ach-m-title { font-size:12px; font-weight:700; color:var(--espresso); }
+.ach-m-sub { font-size:11px; color:var(--muted); margin-top:1px; line-height:1.4; }
+
+/* ═══════════════════════════════════════
+   ② ABOUT
+═══════════════════════════════════════ */
+#about { background: var(--white); border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); }
+.about-layout { display:grid; grid-template-columns:1fr 1fr; gap:80px; align-items:start; }
+.about-pull {
+  font-family: var(--f-display);
+  font-size: 26px; font-weight: 500;
+  font-style: italic;
+  line-height: 1.45;
+  color: var(--espresso);
+  border-left: 3px solid var(--gold);
+  padding-left: 22px;
+  margin: 28px 0;
+}
+.about-body {
+  font-family: var(--f-serif);
+  font-size: 15px; line-height: 1.85;
+  color: var(--charcoal);
+}
+.about-body + .about-body { margin-top: 16px; }
+.about-body strong { color: var(--espresso); font-weight: 700; }
+
+.sectors-block { margin-top: 32px; }
+.sb-title {
+  font-family: var(--f-mono);
+  font-size: 10px; font-weight: 700;
+  letter-spacing: 2px; text-transform: uppercase;
+  color: var(--soft);
+  margin-bottom: 14px;
+}
+.sectors-wrap { display:flex; flex-wrap:wrap; gap:8px; }
+.sec-tag {
+  font-size: 12px; font-weight: 600;
+  padding: 7px 14px;
+  background: var(--cream);
+  border: 1px solid var(--cream3);
+  color: var(--brown);
+  cursor: none;
+  transition: all .2s;
+}
+.sec-tag:hover { background: var(--espresso); color: var(--cream); border-color: var(--espresso); }
+
+/* Values list */
+.values-block { margin-top: 32px; display:flex; flex-direction:column; gap:1px; }
+.val-row {
+  display:flex; gap:16px; align-items:flex-start;
+  padding: 18px 0;
+  border-top: 1px solid var(--cream2);
+}
+.val-row:last-child { border-bottom: 1px solid var(--cream2); }
+.val-num {
+  font-family: var(--f-display);
+  font-size: 22px; font-weight: 700;
+  color: var(--gold); line-height:1;
+  flex-shrink: 0; width:28px;
+  margin-top: 2px;
+}
+.val-title { font-size:13px; font-weight:700; color:var(--espresso); margin-bottom:2px; }
+.val-body { font-size:12px; color:var(--muted); line-height:1.5; }
+
+/* Achievements panel */
+.ach-panel {
+  background: var(--cream);
+  border: 1px solid var(--cream3);
+  padding: 32px;
+}
+.ap-title {
+  font-family: var(--f-display);
+  font-size: 22px; font-weight: 600;
+  color: var(--espresso);
+  margin-bottom: 24px;
+  display: flex; align-items: center; gap: 10px;
+}
+.ap-title::after { content:''; flex:1; height:1px; background:var(--rule); }
+.ach-item {
+  display: flex; gap: 16px; align-items: flex-start;
+  padding: 18px 0;
+  border-bottom: 1px solid var(--cream3);
+}
+.ach-item:last-child { border-bottom: none; padding-bottom: 0; }
+.ach-medal {
+  width: 40px; height: 40px;
+  background: var(--espresso);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 16px; flex-shrink: 0;
+}
+.ach-title { font-size:13px; font-weight:700; color:var(--espresso); margin-bottom:4px; }
+.ach-body { font-size:12px; color:var(--muted); line-height:1.55; }
+.ach-meta {
+  font-family: var(--f-mono);
+  font-size: 10px; color: var(--gold);
+  margin-top: 5px; letter-spacing: .5px;
+}
+
+/* ═══════════════════════════════════════
+   ③ EXPERIENCE
+═══════════════════════════════════════ */
+#experience { background: var(--cream); }
+.exp-layout { display:grid; grid-template-columns:220px 1fr; gap:60px; margin-top:48px; }
+.exp-nav { display:flex; flex-direction:column; gap:0; position:sticky; top:80px; align-self:start; }
+.exp-nav-item {
+  padding: 16px 0;
+  border-bottom: 1px solid var(--cream3);
+  cursor: none;
+  transition: all .2s;
+}
+.exp-nav-item:first-child { border-top: 1px solid var(--cream3); }
+.exp-nav-item.on .eni-org { color: var(--gold); }
+.exp-nav-item.on .eni-dot { background: var(--gold); }
+.eni-header { display:flex; align-items:center; gap:10px; }
+.eni-dot {
+  width: 6px; height: 6px;
+  background: var(--cream3);
+  border-radius: 50%;
+  flex-shrink: 0;
+  transition: background .2s;
+}
+.eni-org { font-size:13px; font-weight:700; color:var(--charcoal); transition:color .2s; }
+.eni-role { font-size:11px; color:var(--muted); margin:4px 0 4px 16px; }
+.eni-date {
+  font-family: var(--f-mono);
+  font-size: 10px; color: var(--soft);
+  margin-left: 16px;
+}
+
+/* Panels */
+.exp-panel { display:none; animation:slideIn .4s ease; }
+.exp-panel.on { display:block; }
+@keyframes slideIn { from{opacity:0;transform:translateX(12px)} to{opacity:1;transform:none} }
+
+.epanel-header {
+  border-left: 3px solid var(--gold);
+  padding-left: 24px;
+  margin-bottom: 32px;
+}
+.epc-role {
+  font-family: var(--f-display);
+  font-size: 34px; font-weight: 600;
+  color: var(--espresso); margin-bottom: 4px;
+}
+.epc-org { font-size:14px; font-weight:700; color:var(--brown3); margin-bottom:6px; }
+.epc-date {
+  font-family: var(--f-mono);
+  font-size: 11px; color: var(--soft);
+}
+.epc-summary {
+  font-family: var(--f-serif);
+  font-size: 14px; line-height: 1.8;
+  color: var(--charcoal);
+  margin-bottom: 32px;
+  padding: 20px;
+  background: var(--white);
+  border: 1px solid var(--cream3);
+  border-left: 3px solid var(--caramel);
+}
+.epc-grid { display:grid; grid-template-columns:1fr 1fr; gap:1px; background:var(--cream3); border:1px solid var(--cream3); }
+.ep-stat {
+  padding: 20px;
+  background: var(--white);
+  cursor: none;
+  transition: background .2s;
+}
+.ep-stat:hover { background: var(--cream); }
+.eps-metric {
+  font-family: var(--f-display);
+  font-size: 36px; font-weight: 700;
+  color: var(--gold); line-height: 1;
+  margin-bottom: 6px;
+}
+.eps-label { font-size:13px; font-weight:700; color:var(--espresso); margin-bottom:4px; }
+.eps-desc { font-size:12px; color:var(--muted); line-height:1.5; }
+
+/* ═══════════════════════════════════════
+   ④ SKILLS
+═══════════════════════════════════════ */
+#skills { background: var(--white); border-top:1px solid var(--rule); }
+.skills-layout { display:grid; grid-template-columns:1fr 1fr; gap:80px; }
+.skill-table { margin-top: 48px; }
+.st-row {
+  display: grid; grid-template-columns: 180px 1fr 40px;
+  align-items: center; gap: 16px;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--cream2);
+}
+.st-label { font-size:13px; font-weight:600; color:var(--espresso); }
+.st-track {
+  height: 4px; background: var(--cream3);
+  position: relative;
+}
+.st-fill {
+  position: absolute; top:0; left:0; height:100%;
+  background: linear-gradient(90deg, var(--espresso), var(--caramel));
+  width: 0;
+  transition: width 1.4s cubic-bezier(.23,1,.32,1);
+}
+.st-pct {
+  font-family: var(--f-mono);
+  font-size: 11px; color: var(--soft);
+  text-align: right;
+}
+
+/* Categories */
+.skill-cats-wrap { margin-top: 48px; }
+.scat-group { margin-bottom: 28px; }
+.scg-title {
+  font-family: var(--f-mono);
+  font-size: 10px; font-weight: 700;
+  letter-spacing: 2px; text-transform: uppercase;
+  color: var(--soft);
+  margin-bottom: 10px;
+  display: flex; align-items: center; gap: 10px;
+}
+.scg-title::after { content:''; flex:1; height:1px; background:var(--cream3); }
+.scg-pills { display:flex; flex-wrap:wrap; gap:6px; }
+.sp {
+  font-size: 12px; font-weight: 600;
+  padding: 5px 12px;
+  background: var(--cream);
+  border: 1px solid var(--cream3);
+  color: var(--brown);
+  cursor: none;
+  transition: all .15s;
+}
+.sp:hover { background: var(--espresso); color: var(--cream); border-color: var(--espresso); }
+
+/* ═══════════════════════════════════════
+   ⑤ PROJECTS
+═══════════════════════════════════════ */
+#projects { background: var(--cream); border-top:1px solid var(--rule); }
+.proj-eyebrow-row {
+  display: flex; align-items: flex-end;
+  justify-content: space-between; flex-wrap:wrap; gap:20px;
+  margin-bottom: 48px;
+}
+.proj-filters { display:flex; gap:0; border:1px solid var(--cream3); }
+.pf {
+  font-family: var(--f-body);
+  font-size: 11px; font-weight: 700;
+  letter-spacing: .8px; text-transform: uppercase;
+  padding: 8px 18px;
+  background: var(--white); color: var(--muted);
+  border: none; border-right: 1px solid var(--cream3);
+  cursor: none; transition: all .2s;
+}
+.pf:last-child { border-right: none; }
+.pf.on,.pf:hover { background: var(--espresso); color: var(--cream); }
+
+.proj-grid { display:grid; grid-template-columns:1fr 1fr; gap:24px; }
+.pcard {
+  background: var(--white);
+  border: 1px solid var(--cream3);
+  box-shadow: var(--shadow);
+  transition: all .3s cubic-bezier(.23,1,.32,1);
+  cursor: none;
+  overflow: hidden;
+}
+.pcard:hover { transform: translateY(-6px); box-shadow: var(--shadow-lg); border-color: var(--caramel); }
+
+.pcard-stripe {
+  height: 4px;
+  background: var(--espresso);
+}
+.p-council .pcard-stripe { background: linear-gradient(90deg, var(--espresso), var(--caramel)); }
+.p-nhs .pcard-stripe     { background: linear-gradient(90deg, var(--brown2), var(--gold)); }
+
+.pcard-head { padding: 28px 28px 20px; }
+.pcard-meta {
+  display: flex; align-items: center; gap: 8px;
+  font-family: var(--f-mono);
+  font-size: 10px; font-weight: 700;
+  letter-spacing: 1.5px; text-transform: uppercase;
+  color: var(--soft);
+  margin-bottom: 14px;
+}
+.pcard-meta::before {
+  content:''; width:16px; height:1px;
+  background: var(--gold);
+}
+.pcard-title {
+  font-family: var(--f-display);
+  font-size: 24px; font-weight: 600;
+  color: var(--espresso); line-height: 1.25;
+  margin-bottom: 6px;
+}
+.pcard-sub { font-size:12px; color:var(--muted); }
+
+.pcard-metrics {
+  display: grid; grid-template-columns: repeat(3,1fr);
+  border-top: 1px solid var(--cream2);
+  border-left: 1px solid var(--cream2);
+  margin: 0 0 0;
+}
+.pm {
+  padding: 16px 14px;
+  border-right: 1px solid var(--cream2);
+  border-bottom: 1px solid var(--cream2);
+}
+.pm-val {
+  font-family: var(--f-display);
+  font-size: 26px; font-weight: 700;
+  color: var(--espresso); line-height:1;
+  margin-bottom: 4px;
+}
+.pm-lbl { font-size: 10px; color: var(--soft); font-weight: 600; text-transform: uppercase; letter-spacing: .5px; }
+
+.pcard-body { padding: 20px 28px 24px; }
+.pcard-hls { margin-bottom: 18px; }
+.phl {
+  display:flex; gap:10px;
+  font-family: var(--f-serif);
+  font-size: 13px; color: var(--charcoal);
+  line-height: 1.6; padding: 6px 0;
+  border-bottom: 1px solid var(--cream2);
+}
+.phl:last-child { border-bottom: none; }
+.phl-mark { color: var(--gold); flex-shrink:0; margin-top:3px; font-size:10px; }
+.pcard-tags { display:flex; flex-wrap:wrap; gap:6px; margin-bottom:18px; }
+.ptag {
+  font-size: 10px; font-weight: 700;
+  padding: 3px 10px; letter-spacing: .5px;
+  text-transform: uppercase;
+  background: var(--cream); color: var(--brown);
+  border: 1px solid var(--cream3);
+}
+.pcard-expand-btn {
+  width:100%; padding:12px;
+  font-family: var(--f-body);
+  font-size: 11px; font-weight: 700;
+  letter-spacing: 1px; text-transform: uppercase;
+  color: var(--espresso);
+  border: 1.5px solid var(--espresso);
+  background: transparent;
+  cursor: none;
+  display:flex; align-items:center; justify-content:center; gap:8px;
+  transition: all .2s;
+}
+.pcard-expand-btn:hover { background: var(--espresso); color: var(--cream); }
+
+.pcard-details { max-height:0; overflow:hidden; transition:max-height .5s cubic-bezier(.23,1,.32,1); }
+.pcard-details.open { max-height:700px; }
+.pd-inner { padding:20px 28px 24px; background:var(--cream); border-top:1px solid var(--cream3); }
+.pd-head {
+  font-family: var(--f-mono); font-size:10px; font-weight:700;
+  letter-spacing:2px; text-transform:uppercase;
+  color:var(--soft); margin-bottom:14px;
+}
+.pd-list { display:flex; flex-direction:column; gap:6px; }
+.pd-item {
+  display:flex; gap:10px;
+  font-size:12.5px; color:var(--charcoal);
+  line-height:1.55; padding:6px 0;
+  border-bottom:1px solid var(--cream3);
+}
+.pd-item:last-child { border-bottom:none; }
+.pd-mark { color:var(--caramel); flex-shrink:0; margin-top:4px; font-size:9px; }
+
+/* ═══════════════════════════════════════
+   ⑥ TOOLKIT
+═══════════════════════════════════════ */
+#toolkit { background: var(--white); border-top:1px solid var(--rule); }
+.tk-grid {
+  display:grid; grid-template-columns:repeat(4,1fr);
+  gap:1px; background:var(--cream3);
+  border:1px solid var(--cream3);
+  margin-top:48px;
+}
+.tkcard {
+  background:var(--white);
+  padding:28px 20px;
+  text-align:center;
+  cursor:none;
+  transition:background .25s, transform .25s;
+  position:relative;
+}
+.tkcard::before {
+  content:''; position:absolute;
+  top:0;left:0;right:0;height:2px;
+  background:var(--espresso);
+  transform:scaleX(0); transform-origin:left;
+  transition:transform .3s;
+}
+.tkcard:hover { background:var(--cream); transform:translateY(-4px); }
+.tkcard:hover::before { transform:scaleX(1); }
+.tk-ico { font-size:26px; margin-bottom:12px; }
+.tk-name { font-size:11px; font-weight:800; text-transform:uppercase; letter-spacing:1px; color:var(--espresso); margin-bottom:4px; }
+.tk-lvl { font-family:var(--f-mono); font-size:10px; color:var(--soft); margin-bottom:10px; }
+.tk-line { height:2px; background:var(--cream3); max-width:60px; margin:0 auto 10px; position:relative; overflow:hidden; }
+.tk-line-fill { position:absolute; top:0;left:0; height:100%; background:var(--espresso); width:0; transition:width 1.2s cubic-bezier(.23,1,.32,1); }
+.tk-desc { font-size:11px; color:var(--muted); line-height:1.5; }
+
+/* ═══════════════════════════════════════
+   ⑦ EDUCATION
+═══════════════════════════════════════ */
+#education { background: var(--cream); border-top:1px solid var(--rule); }
+.edu-grid { display:grid; grid-template-columns:1fr 1fr; gap:24px; margin-top:48px; }
+.edu-card {
+  background: var(--white);
+  border: 1px solid var(--cream3);
+  padding: 36px;
+  box-shadow: var(--shadow);
+  transition: all .3s;
+  cursor: none;
+  border-top: 3px solid var(--espresso);
+  position: relative;
+}
+.edu-card:nth-child(2) { border-top-color: var(--caramel); }
+.edu-card:hover { transform:translateY(-5px); box-shadow:var(--shadow-lg); }
+.edu-grade {
+  display:inline-block;
+  font-family:var(--f-mono);
+  font-size:10px; font-weight:700;
+  letter-spacing:1.5px; text-transform:uppercase;
+  background:var(--espresso); color:var(--cream);
+  padding:4px 12px; margin-bottom:14px;
+}
+.edu-degree {
+  font-family:var(--f-display);
+  font-size:22px; font-weight:600;
+  color:var(--espresso); line-height:1.25;
+  margin-bottom:8px;
+}
+.edu-uni { font-size:13px; font-weight:600; color:var(--brown3); margin-bottom:4px; }
+.edu-date { font-family:var(--f-mono); font-size:11px; color:var(--soft); margin-bottom:18px; }
+.edu-mods { display:flex; flex-wrap:wrap; gap:6px; }
+.edu-mod {
+  font-size:11px; padding:4px 10px;
+  background:var(--cream); color:var(--brown);
+  border:1px solid var(--cream3);
+}
+
+/* ═══════════════════════════════════════
+   ⑧ CERTIFICATIONS
+═══════════════════════════════════════ */
+#certifications { background:var(--white); border-top:1px solid var(--rule); }
+.cert-grid { display:grid; grid-template-columns:1fr 1fr; gap:24px; margin-top:48px; }
+.cert-card {
+  border:1px solid var(--cream3);
+  padding:32px;
+  background:var(--cream);
+  cursor:none;
+  transition:all .3s;
+  position:relative; overflow:hidden;
+}
+.cert-card::before {
+  content:''; position:absolute;
+  left:0;top:0;bottom:0; width:3px;
+  background:var(--espresso);
+}
+.cert-card:nth-child(2)::before { background:var(--caramel); }
+.cert-card:hover { background:var(--white); box-shadow:var(--shadow-md); transform:translateX(4px); }
+.cc-icon { font-size:28px; margin-bottom:14px; }
+.cc-name { font-size:16px; font-weight:700; color:var(--espresso); margin-bottom:6px; line-height:1.3; }
+.cc-issuer { font-size:12px; color:var(--muted); margin-bottom:14px; }
+.cc-status {
+  display:inline-flex; align-items:center; gap:6px;
+  font-family:var(--f-mono); font-size:10px; font-weight:700;
+  letter-spacing:1px; text-transform:uppercase;
+  padding:5px 12px;
+  border:1px solid;
+}
+.s-active { border-color:var(--gold); color:var(--gold); }
+.s-prog   { border-color:var(--brown3); color:var(--brown3); }
+
+/* ═══════════════════════════════════════
+   ⑨ CONTACT
+═══════════════════════════════════════ */
+#contact {
+  background: var(--espresso);
+  padding: 100px 0;
+}
+.contact-inner { max-width:680px; margin:0 auto; padding:0 60px; }
+.contact-eyebrow {
+  font-family:var(--f-mono); font-size:11px; font-weight:700;
+  letter-spacing:3px; text-transform:uppercase;
+  color:var(--gold);
+  display:flex; align-items:center; gap:12px;
+  margin-bottom:20px;
+}
+.contact-eyebrow::before { content:'—'; color:var(--sand); }
+.contact-h {
+  font-family:var(--f-display);
+  font-size:clamp(38px,5vw,64px);
+  font-weight:600;
+  color:var(--cream);
+  line-height:1.08;
+  margin-bottom:20px;
+}
+.contact-h em { font-style:italic; color:var(--gold2); }
+.contact-body {
+  font-family:var(--f-serif);
+  font-size:15px; line-height:1.8;
+  color:var(--sand);
+  margin-bottom:40px;
+}
+.contact-links { display:flex; gap:14px; flex-wrap:wrap; margin-bottom:36px; }
+.cl {
+  display:flex; align-items:center; gap:8px;
+  font-family:var(--f-body);
+  font-size:12px; font-weight:700;
+  letter-spacing:.8px; text-transform:uppercase;
+  padding:14px 26px;
+  cursor:none; transition:all .25s;
+}
+.cl-light {
+  background:var(--cream);
+  color:var(--espresso);
+}
+.cl-light:hover { background:var(--gold2); transform:translateY(-2px); }
+.cl-ghost {
+  background:transparent;
+  color:var(--cream);
+  border:1.5px solid rgba(255,255,255,.3);
+}
+.cl-ghost:hover { border-color:var(--gold); color:var(--gold); transform:translateY(-2px); }
+.contact-note {
+  font-family:var(--f-mono);
+  font-size:11px; color:var(--soft);
+  letter-spacing:.5px;
+}
+
+/* ═══════════════════════════════════════
+   FOOTER
+═══════════════════════════════════════ */
+footer {
+  background:var(--charcoal);
+  padding:24px 60px;
+  display:flex; align-items:center; justify-content:space-between;
+  flex-wrap:wrap; gap:10px;
+  border-top:1px solid rgba(255,255,255,.06);
+}
+.footer-brand { font-family:var(--f-display); font-size:15px; color:var(--sand); font-weight:600; }
+.footer-copy { font-family:var(--f-mono); font-size:10px; color:var(--soft); letter-spacing:.5px; }
+
+/* ═══════════════════════════════════════
+   RESPONSIVE
+═══════════════════════════════════════ */
+@media(max-width:1024px){
+  .hero-layout,.about-layout,.skills-layout,.exp-layout{grid-template-columns:1fr;}
+  .hero-right{display:none;}
+  .tk-grid{grid-template-columns:repeat(2,1fr);}
+  nav{padding:0 24px;}
+  .wrap{padding:0 24px;}
+  section{padding:72px 0;}
+  #hero::before{display:none;}
+}
+@media(max-width:640px){
+  .proj-grid,.edu-grid,.cert-grid,.hero-stats,.epc-grid,.hcards-mini{grid-template-columns:1fr;}
+  .tk-grid{grid-template-columns:repeat(2,1fr);}
+  .nav-links .nl:not(.nl-cta){display:none;}
+  footer{flex-direction:column;text-align:center;}
+}
+</style>
+</head>
+<body>
+
+<div class="progress-line" id="prog"></div>
+<div class="cur-dot" id="cd"></div>
+<div class="cur-ring" id="cr"></div>
+
+<!-- NAV -->
+<nav id="nav">
+  <div class="nav-brand">Praveena <span>Ramesh</span></div>
+  <div class="nav-links">
+    <button class="nl" onclick="goTo('about')">About</button>
+    <button class="nl" onclick="goTo('experience')">Experience</button>
+    <button class="nl" onclick="goTo('skills')">Skills</button>
+    <button class="nl" onclick="goTo('projects')">Projects</button>
+    <button class="nl" onclick="goTo('education')">Education</button>
+    <button class="nl nl-cta" onclick="goTo('contact')">Contact</button>
+  </div>
+</nav>
+
+<!-- ① HERO -->
+<section id="hero">
+  <div class="wrap" style="width:100%;max-width:1120px;margin:0 auto;padding:0 60px;">
+    <div class="hero-layout">
+      <div>
+        <div class="hero-category rv">Business Analyst · London, UK</div>
+        <h1 class="hero-name rv d1">
+          Praveena
+          <span class="italic">Ramesh</span>
+        </h1>
+        <div class="hero-title-bar rv d2">
+          <div class="hero-role">Business Analyst</div>
+        </div>
+        <p class="hero-desc rv d3">
+          Transforming <em>complex business problems</em> into structured, actionable requirements — with proven impact across IT consultancy, education, and public sector delivery.
+        </p>
+        <div class="hero-stats rv d4">
+          <div class="hstat"><div class="hstat-val" id="s1">0</div><div class="hstat-lbl">Years Experience</div></div>
+          <div class="hstat"><div class="hstat-val" id="s2">0</div><div class="hstat-lbl">Projects Delivered</div></div>
+          <div class="hstat"><div class="hstat-val" id="s3">0%</div><div class="hstat-lbl">UAT First-Pass</div></div>
+          <div class="hstat"><div class="hstat-val" id="s4">0%</div><div class="hstat-lbl">Pre-Dev Clarity</div></div>
+        </div>
+        <div class="hero-btns rv d5">
+          <button class="btn btn-dark" onclick="goTo('projects')">View My Work</button>
+          <button class="btn btn-outline" onclick="goTo('contact')">Get in Touch</button>
+        </div>
+      </div>
+      <div class="hero-right">
+        <div class="hr-card">
+          <div class="hrc-label">Core Toolkit</div>
+          <div class="toolkit-grid">
+            <div class="tk-pill">JIRA</div><div class="tk-pill">Confluence</div>
+            <div class="tk-pill">Power BI</div><div class="tk-pill">MS Visio</div>
+            <div class="tk-pill">MoSCoW</div><div class="tk-pill">Agile/Scrum</div>
+            <div class="tk-pill">BRD / FRD</div><div class="tk-pill">UAT Design</div>
+            <div class="tk-pill">Azure AZ-500</div><div class="tk-pill">ISO 27001</div>
+          </div>
+        </div>
+        <div class="hr-card">
+          <div class="hrc-label">Recognition</div>
+          <div class="ach-mini">
+            <div class="ach-m"><div class="ach-m-icon">🏆</div><div><div class="ach-m-title">Best BA — Team Award</div><div class="ach-m-sub">Wrightman Academy · May 2024</div></div></div>
+            <div class="ach-m"><div class="ach-m-icon">🎓</div><div><div class="ach-m-title">Project Lead — MSc Group</div><div class="ach-m-sub">University of East London · Jun 2022</div></div></div>
+            <div class="ach-m"><div class="ach-m-icon">☁️</div><div><div class="ach-m-title">Microsoft AZ-500 Certified</div><div class="ach-m-sub">Azure Security Engineer · 2024</div></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ② ABOUT -->
+<section id="about">
+  <div class="wrap">
+    <div class="about-layout">
+      <div>
+        <div class="sec-eyebrow rvl">About</div>
+        <h2 class="sec-h rvl d1">The analyst<br>behind the <em>work</em></h2>
+        <div class="about-pull rvl d2">"My role is to make the problem so clear that the right solution becomes obvious."</div>
+        <p class="about-body rvl d3">A London-based Business Analyst with a background in <strong>data science and systems engineering</strong> — equally at home running a stakeholder workshop, authoring a BRD, or building a Power BI dashboard from scratch.</p>
+        <p class="about-body rvl d4">Experienced across <strong>IT consultancy, education, and public sector</strong> environments, with a consistent record of achieving clarity before development begins — so teams build the right thing, right first time.</p>
+
+        <div class="sectors-block rvl d5">
+          <div class="sb-title">Sectors</div>
+          <div class="sectors-wrap">
+            <div class="sec-tag">IT & Consultancy</div>
+            <div class="sec-tag">Education</div>
+            <div class="sec-tag">Healthcare</div>
+            <div class="sec-tag">Local Government</div>
+            <div class="sec-tag">Compliance & Security</div>
+            <div class="sec-tag">Data & Analytics</div>
+          </div>
+        </div>
+
+        <div class="values-block rvl d6">
+          <div class="val-row"><div class="val-num">01</div><div><div class="val-title">Clarity over complexity</div><div class="val-body">Requirements that teams can build from — first time, without ambiguity.</div></div></div>
+          <div class="val-row"><div class="val-num">02</div><div><div class="val-title">Stakeholder-first thinking</div><div class="val-body">Bridging technical and non-technical worlds with precision and empathy.</div></div></div>
+          <div class="val-row"><div class="val-num">03</div><div><div class="val-title">Measurable outcomes</div><div class="val-body">Every deliverable tied to a quantified business result.</div></div></div>
+        </div>
+      </div>
+
+      <div class="rvr d2">
+        <div class="ach-panel">
+          <div class="ap-title">Achievements</div>
+          <div class="ach-item">
+            <div class="ach-medal">🏆</div>
+            <div>
+              <div class="ach-title">Best Business Analyst — Team Award</div>
+              <div class="ach-body">Recognised as the top-performing BA within the team at Wrightman Academy for outstanding requirements quality, stakeholder communication, and UAT excellence across multiple system rollouts.</div>
+              <div class="ach-meta">May 2024 · Wrightman Academy · London, UK</div>
+            </div>
+          </div>
+          <div class="ach-item">
+            <div class="ach-medal">🎓</div>
+            <div>
+              <div class="ach-title">Project Lead — MSc Group Assignment</div>
+              <div class="ach-body">Successfully led a cross-functional student team through a complex group project during the MSc Data Science programme — managing scope, planning, team coordination, and delivery to a successful conclusion.</div>
+              <div class="ach-meta">June 2022 · University of East London</div>
+            </div>
+          </div>
+          <div class="ach-item">
+            <div class="ach-medal">📊</div>
+            <div>
+              <div class="ach-title">MSc Data Science — Merit</div>
+              <div class="ach-body">Graduated with Merit — demonstrating strong analytical and data-driven capabilities across data analysis, statistical modelling, machine learning, and governance.</div>
+              <div class="ach-meta">September 2023 · University of East London</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ③ EXPERIENCE -->
+<section id="experience">
+  <div class="wrap">
+    <div class="sec-eyebrow rv">Work Experience</div>
+    <h2 class="sec-h rv d1">Where I've <em>delivered</em></h2>
+    <div class="exp-layout">
+      <div class="exp-nav rvl d2">
+        <div class="exp-nav-item on" onclick="switchExp('dhali',this)">
+          <div class="eni-header"><div class="eni-dot"></div><div class="eni-org">Dhali IT Consultancy</div></div>
+          <div class="eni-role">Business Analyst</div>
+          <div class="eni-date">Jul 2025 – Present</div>
+        </div>
+        <div class="exp-nav-item" onclick="switchExp('wright',this)">
+          <div class="eni-header"><div class="eni-dot"></div><div class="eni-org">Wrightman Academy</div></div>
+          <div class="eni-role">Business Analyst</div>
+          <div class="eni-date">Apr 2023 – Jun 2025</div>
+        </div>
+      </div>
+
+      <div class="rvr d2">
+        <div class="exp-panel on" id="ep-dhali">
+          <div class="epanel-header">
+            <div class="epc-org">Dhali IT Consultancy · London, UK</div>
+            <div class="epc-role">Business Analyst</div>
+            <div class="epc-date">July 2025 – Present</div>
+          </div>
+          <div class="epc-summary">Delivering requirements-led solutions across IT and advisory projects — leading stakeholder discovery, Agile sprint delivery, and compliance integration for cross-functional teams of 8–12.</div>
+          <div class="epc-grid">
+            <div class="ep-stat"><div class="eps-metric">95%</div><div class="eps-label">Pre-Dev Clarity</div><div class="eps-desc">Leading stakeholder discovery workshops across 5+ departments — eliminating mid-sprint scope changes</div></div>
+            <div class="ep-stat"><div class="eps-metric">30%</div><div class="eps-label">Rework Reduction</div><div class="eps-desc">BRDs, FRDs, user stories & acceptance criteria authored for 3 concurrent projects</div></div>
+            <div class="ep-stat"><div class="eps-metric">2</div><div class="eps-label">Sprint Cycles Saved</div><div class="eps-desc">Structured JIRA backlog management and sprint facilitation accelerated delivery timelines</div></div>
+            <div class="ep-stat"><div class="eps-metric">20%</div><div class="eps-label">Fewer Audit Gaps</div><div class="eps-desc">ISO 27001 & NIST compliance embedded directly into process documentation frameworks</div></div>
+          </div>
+        </div>
+        <div class="exp-panel" id="ep-wright">
+          <div class="epanel-header">
+            <div class="epc-org">Wrightman Academy · London, UK</div>
+            <div class="epc-role">Business Analyst</div>
+            <div class="epc-date">April 2023 – June 2025</div>
+          </div>
+          <div class="epc-summary">Primary BA liaison between 10+ non-technical stakeholders and development teams — delivering process improvements, system rollouts, and UAT across 6 operational workflows. Awarded Best BA in May 2024.</div>
+          <div class="epc-grid">
+            <div class="ep-stat"><div class="eps-metric">60%</div><div class="eps-label">Fewer Delays</div><div class="eps-desc">Primary liaison for 10+ non-technical stakeholders and development teams — structured BRDs and process maps</div></div>
+            <div class="ep-stat"><div class="eps-metric">8 hrs</div><div class="eps-label">Freed Per Week</div><div class="eps-desc">Gap analysis across 6 workflows eliminated 25% of manual effort and staff overhead</div></div>
+            <div class="ep-stat"><div class="eps-metric">90%</div><div class="eps-label">UAT First-Pass</div><div class="eps-desc">Test case creation, tester coordination & defect tracking across all delivered systems</div></div>
+            <div class="ep-stat"><div class="eps-metric">30%</div><div class="eps-label">Adoption Increase</div><div class="eps-desc">Role-specific training materials for 3 system rollouts — 30% adoption lift within 60 days</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ④ SKILLS -->
+<section id="skills">
+  <div class="wrap">
+    <div class="skills-layout">
+      <div>
+        <div class="sec-eyebrow rvl">Competencies</div>
+        <h2 class="sec-h rvl d1">Skills &<br><em>expertise</em></h2>
+        <div class="skill-table rvl d2">
+          <div class="st-row"><div class="st-label">Requirements Gathering</div><div class="st-track"><div class="st-fill" data-p="95"></div></div><div class="st-pct">95%</div></div>
+          <div class="st-row"><div class="st-label">Stakeholder Engagement</div><div class="st-track"><div class="st-fill" data-p="90"></div></div><div class="st-pct">90%</div></div>
+          <div class="st-row"><div class="st-label">Agile / Scrum Delivery</div><div class="st-track"><div class="st-fill" data-p="88"></div></div><div class="st-pct">88%</div></div>
+          <div class="st-row"><div class="st-label">Process Mapping (Visio)</div><div class="st-track"><div class="st-fill" data-p="85"></div></div><div class="st-pct">85%</div></div>
+          <div class="st-row"><div class="st-label">Power BI / Analytics</div><div class="st-track"><div class="st-fill" data-p="80"></div></div><div class="st-pct">80%</div></div>
+          <div class="st-row"><div class="st-label">UAT Design & Execution</div><div class="st-track"><div class="st-fill" data-p="90"></div></div><div class="st-pct">90%</div></div>
+          <div class="st-row"><div class="st-label">BRD / FRD Authoring</div><div class="st-track"><div class="st-fill" data-p="95"></div></div><div class="st-pct">95%</div></div>
+        </div>
+      </div>
+
+      <div class="skill-cats-wrap rvr d2">
+        <div class="sec-eyebrow" style="margin-top:48px;">Skill Areas</div>
+        <div class="scat-group">
+          <div class="scg-title">BA Core</div>
+          <div class="scg-pills"><span class="sp">BRD/FRD</span><span class="sp">User Stories</span><span class="sp">Acceptance Criteria</span><span class="sp">RTM</span><span class="sp">Gap Analysis</span><span class="sp">MoSCoW</span><span class="sp">Impact Assessment</span></div>
+        </div>
+        <div class="scat-group">
+          <div class="scg-title">Delivery Methodologies</div>
+          <div class="scg-pills"><span class="sp">Agile/Scrum</span><span class="sp">Waterfall</span><span class="sp">SDLC</span><span class="sp">Sprint Planning</span><span class="sp">Backlog Grooming</span></div>
+        </div>
+        <div class="scat-group">
+          <div class="scg-title">Tools & Platforms</div>
+          <div class="scg-pills"><span class="sp">JIRA</span><span class="sp">Confluence</span><span class="sp">Power BI</span><span class="sp">MS Visio</span><span class="sp">Excel (Advanced)</span><span class="sp">Azure AZ-500</span><span class="sp">Asana</span></div>
+        </div>
+        <div class="scat-group">
+          <div class="scg-title">Compliance & Governance</div>
+          <div class="scg-pills"><span class="sp">ISO 27001</span><span class="sp">NIST</span><span class="sp">UK GDPR</span><span class="sp">WCAG 2.1 AA</span><span class="sp">Risk Assessment</span><span class="sp">Data Governance</span></div>
+        </div>
+        <div class="scat-group">
+          <div class="scg-title">Soft Skills</div>
+          <div class="scg-pills"><span class="sp">Workshop Facilitation</span><span class="sp">Stakeholder Comms</span><span class="sp">Training Delivery</span><span class="sp">Cross-functional Collab</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ⑤ PROJECTS -->
+<section id="projects">
+  <div class="wrap">
+    <div class="proj-eyebrow-row">
+      <div>
+        <div class="sec-eyebrow rvl">Portfolio</div>
+        <h2 class="sec-h rvl d1">Self-driven <em>projects</em></h2>
+      </div>
+      <div class="proj-filters rv d2">
+        <button class="pf on" onclick="filter('all',this)">All</button>
+        <button class="pf" onclick="filter('gov',this)">Local Gov</button>
+        <button class="pf" onclick="filter('nhs',this)">Healthcare</button>
+      </div>
+    </div>
+    <div class="proj-grid">
+      <div class="pcard p-council rv d1" data-cat="gov">
+        <div class="pcard-stripe"></div>
+        <div class="pcard-head">
+          <div class="pcard-meta">Local Government · Apr–May 2026</div>
+          <div class="pcard-title">Housing Repairs System Improvement</div>
+          <div class="pcard-sub">Brookfield London Borough Council (BLBC) — fictional BA engagement</div>
+        </div>
+        <div class="pcard-metrics">
+          <div class="pm"><div class="pm-val">73%</div><div class="pm-lbl">Delay reduced</div></div>
+          <div class="pm"><div class="pm-val">40%</div><div class="pm-lbl">Capacity saved</div></div>
+          <div class="pm"><div class="pm-val">15</div><div class="pm-lbl">UAT cases</div></div>
+        </div>
+        <div class="pcard-body">
+          <div class="pcard-hls">
+            <div class="phl"><span class="phl-mark">◆</span>6 root-cause inefficiencies identified — 18-day average delay (260% above SLA) mapped and quantified</div>
+            <div class="phl"><span class="phl-mark">◆</span>Full BRD · 8 user stories with ACs · MoSCoW backlog · 2 Agile sprints in JIRA</div>
+            <div class="phl"><span class="phl-mark">◆</span>As-Is & To-Be Visio swimlane maps · Power BI dashboard · Lessons Learned retrospective</div>
+          </div>
+          <div class="pcard-tags">
+            <span class="ptag">JIRA</span><span class="ptag">Confluence</span><span class="ptag">MS Visio</span><span class="ptag">Power BI</span><span class="ptag">MoSCoW</span>
+          </div>
+          <button class="pcard-expand-btn" onclick="expand(this)"><span>View Full Deliverables</span><span>↓</span></button>
+        </div>
+        <div class="pcard-details">
+          <div class="pd-inner">
+            <div class="pd-head">Complete Deliverable Package</div>
+            <div class="pd-list">
+              <div class="pd-item"><span class="pd-mark">◆</span>Stakeholder Register — 6 stakeholders · Power/Interest grid · engagement strategy</div>
+              <div class="pd-item"><span class="pd-mark">◆</span>As-Is Process Map (4 swimlanes · 6 pain points · annotated in MS Visio)</div>
+              <div class="pd-item"><span class="pd-mark">◆</span>To-Be Process Map — digital intake · real-time queue · self-service booking · automated SMS</div>
+              <div class="pd-item"><span class="pd-mark">◆</span>BRD v1.0 — 8 functional + 4 non-functional requirements (UK GDPR, WCAG 2.1 AA)</div>
+              <div class="pd-item"><span class="pd-mark">◆</span>8 User Stories — Given/When/Then acceptance criteria in JIRA and Confluence</div>
+              <div class="pd-item"><span class="pd-mark">◆</span>MoSCoW Prioritisation — 4 Must Have · 3 Should Have · 1 Could Have (all root-cause justified)</div>
+              <div class="pd-item"><span class="pd-mark">◆</span>15 UAT Test Cases — happy path · edge cases · negative scenarios</div>
+              <div class="pd-item"><span class="pd-mark">◆</span>Power BI Dashboard — 5 KPIs · before/after trend line · date slicer · 40-row dataset</div>
+              <div class="pd-item"><span class="pd-mark">◆</span>Lessons Learned & Sprint Retrospective with Project Closure Statement</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="pcard p-nhs rv d2" data-cat="nhs">
+        <div class="pcard-stripe"></div>
+        <div class="pcard-head">
+          <div class="pcard-meta">Healthcare · Feb–Mar 2026</div>
+          <div class="pcard-title">Patient Appointment & Referral System Improvement</div>
+          <div class="pcard-sub">NHS Urgent Care Pathway — fictional BA engagement</div>
+        </div>
+        <div class="pcard-metrics">
+          <div class="pm"><div class="pm-val">4</div><div class="pm-lbl">Inefficiencies</div></div>
+          <div class="pm"><div class="pm-val">15+</div><div class="pm-lbl">UAT cases</div></div>
+          <div class="pm"><div class="pm-val">RTM</div><div class="pm-lbl">Traceability</div></div>
+        </div>
+        <div class="pcard-body">
+          <div class="pcard-hls">
+            <div class="phl"><span class="phl-mark">◆</span>Mapped As-Is urgent care patient journey across appointment booking and referral pathways</div>
+            <div class="phl"><span class="phl-mark">◆</span>Full BRD · user stories · RTM — aligned to NHS SDLC lifecycle requirements</div>
+            <div class="phl"><span class="phl-mark">◆</span>Simulated Agile sprint delivery in JIRA — end-to-end BA in a healthcare context</div>
+          </div>
+          <div class="pcard-tags">
+            <span class="ptag">JIRA</span><span class="ptag">Confluence</span><span class="ptag">MS Visio</span><span class="ptag">NHS SDLC</span><span class="ptag">RTM</span>
+          </div>
+          <button class="pcard-expand-btn" onclick="expand(this)"><span>View Full Deliverables</span><span>↓</span></button>
+        </div>
+        <div class="pcard-details">
+          <div class="pd-inner">
+            <div class="pd-head">Complete Deliverable Package</div>
+            <div class="pd-list">
+              <div class="pd-item"><span class="pd-mark">◆</span>As-Is patient journey map — urgent care appointment booking & referral pathways</div>
+              <div class="pd-item"><span class="pd-mark">◆</span>4 root-cause inefficiencies documented with impact on patient care access</div>
+              <div class="pd-item"><span class="pd-mark">◆</span>To-Be process design with digital improvement proposals and workflow optimisation</div>
+              <div class="pd-item"><span class="pd-mark">◆</span>Full BRD aligned to NHS requirements governance standards</div>
+              <div class="pd-item"><span class="pd-mark">◆</span>15+ user stories with acceptance criteria — clinical and administrative needs captured</div>
+              <div class="pd-item"><span class="pd-mark">◆</span>RTM — every requirement traced to a clinical or operational need</div>
+              <div class="pd-item"><span class="pd-mark">◆</span>15+ UAT test cases — appointment booking · referral workflows · notifications</div>
+              <div class="pd-item"><span class="pd-mark">◆</span>JIRA Scrum board — simulated sprint delivery in a healthcare context</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ⑥ TOOLKIT -->
+<section id="toolkit">
+  <div class="wrap">
+    <div class="sec-eyebrow rv">Tools</div>
+    <h2 class="sec-h rv d1">My BA <em>toolkit</em></h2>
+    <div class="tk-grid">
+      <div class="tkcard rv d1"><div class="tk-ico">📋</div><div class="tk-name">JIRA</div><div class="tk-lvl">Advanced</div><div class="tk-line"><div class="tk-line-fill" data-p="90"></div></div><div class="tk-desc">Scrum boards · sprint planning · backlog management</div></div>
+      <div class="tkcard rv d2"><div class="tk-ico">📚</div><div class="tk-name">Confluence</div><div class="tk-lvl">Advanced</div><div class="tk-line"><div class="tk-line-fill" data-p="88"></div></div><div class="tk-desc">Space design · BRD pages · stakeholder documentation</div></div>
+      <div class="tkcard rv d3"><div class="tk-ico">📊</div><div class="tk-name">Power BI</div><div class="tk-lvl">Proficient</div><div class="tk-line"><div class="tk-line-fill" data-p="80"></div></div><div class="tk-desc">KPI dashboards · before/after trends · data modelling</div></div>
+      <div class="tkcard rv d4"><div class="tk-ico">🗺</div><div class="tk-name">MS Visio</div><div class="tk-lvl">Advanced</div><div class="tk-line"><div class="tk-line-fill" data-p="85"></div></div><div class="tk-desc">Swimlane diagrams · As-Is/To-Be process maps</div></div>
+      <div class="tkcard rv d1"><div class="tk-ico">🎯</div><div class="tk-name">MoSCoW</div><div class="tk-lvl">Expert</div><div class="tk-line"><div class="tk-line-fill" data-p="95"></div></div><div class="tk-desc">Requirements prioritisation · sprint alignment</div></div>
+      <div class="tkcard rv d2"><div class="tk-ico">☁️</div><div class="tk-name">Azure AZ-500</div><div class="tk-lvl">Certified</div><div class="tk-line"><div class="tk-line-fill" data-p="78"></div></div><div class="tk-desc">Security Engineer · compliance · cloud governance</div></div>
+      <div class="tkcard rv d3"><div class="tk-ico">📝</div><div class="tk-name">BRD / FRD</div><div class="tk-lvl">Expert</div><div class="tk-line"><div class="tk-line-fill" data-p="95"></div></div><div class="tk-desc">Requirements docs · RTM · version control</div></div>
+      <div class="tkcard rv d4"><div class="tk-ico">🧪</div><div class="tk-name">UAT Design</div><div class="tk-lvl">Advanced</div><div class="tk-line"><div class="tk-line-fill" data-p="90"></div></div><div class="tk-desc">Happy path · edge cases · negative scenarios</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ⑦ EDUCATION -->
+<section id="education">
+  <div class="wrap">
+    <div class="sec-eyebrow rv">Academic Background</div>
+    <h2 class="sec-h rv d1">Education &<br><em>foundations</em></h2>
+    <div class="edu-grid">
+      <div class="edu-card rv d2">
+        <div class="edu-grade">Merit</div>
+        <div class="edu-degree">MSc Data Science</div>
+        <div class="edu-uni">University of East London · London, UK</div>
+        <div class="edu-date">January 2022 – September 2023</div>
+        <div class="edu-mods">
+          <span class="edu-mod">Data Analysis</span>
+          <span class="edu-mod">Statistical Modelling</span>
+          <span class="edu-mod">Machine Learning</span>
+          <span class="edu-mod">Data Governance</span>
+          <span class="edu-mod">Project Leadership</span>
+        </div>
+      </div>
+      <div class="edu-card rv d3">
+        <div class="edu-grade" style="background:var(--caramel);">Distinction</div>
+        <div class="edu-degree">BEng Electronics & Communication Engineering</div>
+        <div class="edu-uni">Anna University · Chennai, India</div>
+        <div class="edu-date">June 2017 – July 2021</div>
+        <div class="edu-mods">
+          <span class="edu-mod">Systems Engineering</span>
+          <span class="edu-mod">Signal Processing</span>
+          <span class="edu-mod">Technical Documentation</span>
+          <span class="edu-mod">Analytical Thinking</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ⑧ CERTIFICATIONS -->
+<section id="certifications">
+  <div class="wrap">
+    <div class="sec-eyebrow rv">Credentials</div>
+    <h2 class="sec-h rv d1">Certifications &<br><em>development</em></h2>
+    <div class="cert-grid">
+      <div class="cert-card rv d2">
+        <div class="cc-icon">☁️</div>
+        <div class="cc-name">Microsoft Certified: Azure Security Engineer Associate</div>
+        <div class="cc-issuer">Microsoft · AZ-500 · 2024</div>
+        <div class="cc-status s-active">✓ Active</div>
+      </div>
+      <div class="cert-card rv d3">
+        <div class="cc-icon">📊</div>
+        <div class="cc-name">Certified Business Analysis Professional (CBAP)</div>
+        <div class="cc-issuer">IIBA — Gold Standard BA Certification</div>
+        <div class="cc-status s-prog">⏳ In Progress · Target Jun 2026</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ⑨ CONTACT -->
+<section id="contact">
+  <div class="contact-inner">
+    <div class="contact-eyebrow rv">Get in Touch</div>
+    <h2 class="contact-h rv d1">Open to new<br><em>opportunities</em></h2>
+    <p class="contact-body rv d2">I am actively looking for Business Analyst roles across sectors. If you are hiring or would like to discuss a project, I would love to hear from you.</p>
+    <div class="contact-links rv d3">
+      <a class="cl cl-light" href="mailto:rameshpraveena01@gmail.com">✉ rameshpraveena01@gmail.com</a>
+      <a class="cl cl-ghost" href="https://linkedin.com" target="_blank">LinkedIn Profile →</a>
+    </div>
+    <div class="contact-note rv d4">Based in London · Open to hybrid and remote roles</div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-brand">Praveena Ramesh</div>
+  <div class="footer-copy">Business Analyst Portfolio · London, UK</div>
+</footer>
+
+<script>
+/* Cursor */
+const cd=document.getElementById('cd'),cr=document.getElementById('cr');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cd.style.cssText=`left:${mx}px;top:${my}px;`;});
+(function loop(){rx+=(mx-rx)*.1;ry+=(my-ry)*.1;cr.style.cssText=`left:${rx}px;top:${ry}px;`;requestAnimationFrame(loop);})();
+document.querySelectorAll('button,a,.tk-pill,.sp,.sec-tag,.tkcard,.pcard,.cert-card,.edu-card,.ep-stat,.val-row,.ach-item,.exp-nav-item,.ach-m,.pcard-expand-btn').forEach(el=>{
+  el.addEventListener('mouseenter',()=>document.body.classList.add('hov'));
+  el.addEventListener('mouseleave',()=>document.body.classList.remove('hov'));
+});
+
+/* Progress + Nav */
+window.addEventListener('scroll',()=>{
+  const pct=(window.scrollY/(document.body.scrollHeight-window.innerHeight))*100;
+  document.getElementById('prog').style.width=pct+'%';
+  document.getElementById('nav').classList.toggle('lifted',window.scrollY>40);
+  const secs=['about','experience','skills','projects','toolkit','education','certifications','contact'];
+  let cur='';
+  secs.forEach(id=>{const el=document.getElementById(id);if(el&&el.getBoundingClientRect().top<120)cur=id;});
+  document.querySelectorAll('.nl').forEach(l=>l.classList.remove('on'));
+});
+
+/* Smooth scroll */
+function goTo(id){document.getElementById(id)?.scrollIntoView({behavior:'smooth',block:'start'});}
+
+/* Reveal */
+const obs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      e.target.classList.add('on');
+      e.target.querySelectorAll('.st-fill[data-p],.tk-line-fill[data-p]').forEach(b=>{
+        setTimeout(()=>b.style.width=b.dataset.p+'%',300);
+      });
+    }
+  });
+},{threshold:.1});
+document.querySelectorAll('.rv,.rvl,.rvr').forEach(el=>obs.observe(el));
+
+/* Skill bars */
+const sbObs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      e.target.querySelectorAll('.st-fill[data-p]').forEach((b,i)=>setTimeout(()=>b.style.width=b.dataset.p+'%',i*80+200));
+    }
+  });
+},{threshold:.3});
+document.querySelectorAll('#skills').forEach(s=>sbObs.observe(s));
+
+/* Toolkit */
+const tkObs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting)e.target.querySelectorAll('.tk-line-fill[data-p]').forEach((b,i)=>setTimeout(()=>b.style.width=b.dataset.p+'%',i*60+100));
+  });
+},{threshold:.2});
+document.querySelectorAll('#toolkit').forEach(s=>tkObs.observe(s));
+
+/* Counter */
+function ctr(el,t,sfx,dur=1800){
+  let v=0;const step=t/(dur/16);
+  const tm=setInterval(()=>{v=Math.min(v+step,t);el.textContent=Math.floor(v)+sfx;if(v>=t)clearInterval(tm);},16);
+}
+const hObs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting){ctr(document.getElementById('s1'),3,'+');ctr(document.getElementById('s2'),10,'+');ctr(document.getElementById('s3'),95,'%');ctr(document.getElementById('s4'),90,'%');hObs.disconnect();}});
+},{threshold:.4});
+hObs.observe(document.getElementById('hero'));
+
+/* Experience tabs */
+function switchExp(id,tab){
+  document.querySelectorAll('.exp-nav-item').forEach(t=>t.classList.remove('on'));
+  document.querySelectorAll('.exp-panel').forEach(p=>p.classList.remove('on'));
+  tab.classList.add('on');
+  document.getElementById('ep-'+id).classList.add('on');
+}
+
+/* Expand */
+function expand(btn){
+  const d=btn.closest('.pcard-body').nextElementSibling;
+  const open=d.classList.toggle('open');
+  btn.querySelector('span:first-child').textContent=open?'Hide Details':'View Full Deliverables';
+  btn.querySelector('span:last-child').textContent=open?'↑':'↓';
+}
+
+/* Filter */
+function filter(cat,btn){
+  document.querySelectorAll('.pf').forEach(b=>b.classList.remove('on'));
+  btn.classList.add('on');
+  document.querySelectorAll('.pcard').forEach(c=>c.style.display=(cat==='all'||c.dataset.cat===cat)?'':'none');
+}
+
+/* Initial hero reveal */
+document.querySelectorAll('#hero .rv,#hero .rvl,#hero .rvr').forEach((el,i)=>setTimeout(()=>el.classList.add('on'),i*100+250));
+</script>
+</body>
+</html>
